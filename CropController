@@ -1,0 +1,57 @@
+package com.example.BMSIT.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.BMSIT.Entity.Cropentity;
+import com.example.BMSIT.service.Cropservice;
+
+@RestController
+public class Cropcontroller {
+	@Autowired
+	private Cropservice Crops;
+	
+	@PostMapping("/addNewCrop")
+	public Cropentity postCrop(@RequestBody Cropentity crop) {
+		return Crops.addCrop(crop);
+	}
+	
+	@GetMapping("/getAllCrops")
+	public List<Cropentity> showcrop() {
+		return Crops.getAllCrops();
+	}
+	
+	@GetMapping("/findCropId/{id}")
+	public Cropentity findCropId(@PathVariable int id){
+		return  Crops.getCropByid(id);
+	}
+	
+	@GetMapping("/findName/{cropName}")
+	public List<Cropentity> getByName(@PathVariable String cropName) {
+		return Crops.getCropByName(cropName);
+	}
+	
+	@GetMapping("/findType/{cropType}")
+	public List<Cropentity> getByType(@PathVariable String cropType){
+		return  Crops.getCropByType(cropType);
+	}
+	
+	@PutMapping("/updateCrop")
+	public Cropentity updateCrop(@RequestBody Cropentity crop) {
+		return Crops.updateCrop(crop);
+	}
+	
+	@DeleteMapping("/deleteCrop/{id}")
+	public String deleteCrop(@PathVariable int id) {
+		return Crops.deleteCrop(id);
+	}
+	
+}
