@@ -1,0 +1,53 @@
+package com.example.BMSIT.service;
+
+import java.util.List;
+//import java.util.ArrayList;
+//import java.util.jar.Attributes.Name;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.BMSIT.Entity.Cropentity;
+import com.example.BMSIT.repository.Cropinterface;
+
+@Service
+public class Cropservice {
+	
+	@Autowired
+	private Cropinterface Cropinterface;
+	
+	public Cropentity addCrop(Cropentity crop) {
+		return Cropinterface.save(crop);
+	}
+	
+	public List<Cropentity> getAllCrops() {
+		return Cropinterface.findAll();
+	}
+	
+	public Cropentity getCropByid(int id) {
+		return Cropinterface.findById(id).orElse(null);
+	}
+	
+	public List<Cropentity> getCropByName(String cropName) {
+		return Cropinterface.findByCropName(cropName);
+	}
+	
+	public List<Cropentity> getCropByType(String cropType) {
+		return Cropinterface.findByCropType(cropType);
+	}
+	
+	public Cropentity updateCrop(Cropentity crop) {
+		Cropentity existingCrop = Cropinterface.findById(crop.getCropId()).orElse(null);
+		existingCrop.setCropId(crop.getCropId());
+		existingCrop.setCropName(crop.getCropName());
+		existingCrop.setCropType(crop.getCropType());
+		return Cropinterface.save(existingCrop);
+	}
+	
+	public String deleteCrop(int id) {
+		Cropinterface.deleteById(id);
+		return "successfully deleted " +id;
+
+	}
+		
+}
